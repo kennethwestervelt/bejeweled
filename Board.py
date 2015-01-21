@@ -11,6 +11,30 @@ class Board(object):
 		self.board = [[random.randint(1, self.n_types) for i in 
 			xrange(self.size[1])] for j in xrange(self.size[0])]
 
+	def check_for_pairs(self):
+		# Returns pair-coordinates of adjacent colors and their direction (row/col).
+		self.hor = []
+		self.ver = []
+		#checks to the right
+		for i in range(self.size[0]):
+			for j in range(self.size[1]-1):
+				if self.board[i][j] == self.board[i][j+1]:
+					# Get color of matching pair later.
+					
+					self.hor.append([i,j, 'color'])
+		
+		print self.hor
+
+		#checks below
+		for i in range(self.size[0]-1):
+			for j in range(self.size[1]):
+				if self.board[i][j] == self.board[i+1][j]:
+					# Get color of matching pair later.
+					
+					self.ver.append([i, j, 'color'])
+
+		print self.ver
+
 	def remove(self, i, j):
 		# don't call collapse! remove will be called >= 3 times before
 		# collapse is called.
@@ -101,5 +125,7 @@ if __name__ == '__main__':
 	print board.collapse()
 	board.move((0, 1), (1, 1))
 	print board.collapse()
-	print board.board
-	# Why is 1 still at (0, 1)? 
+	print board.grid_display()
+	# Why is 1 still at (0, 1)?
+
+	board.check_for_pairs()
