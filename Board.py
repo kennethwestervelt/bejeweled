@@ -35,6 +35,104 @@ class Board(object):
 
 		print self.ver
 
+		def find_possible_matches(self):
+		# Sanity check.
+		if self.hor == [] and self.ver == []:
+			print "No adjacent pairs. No possible moves."
+			return None
+
+		self.possible_moves_row = []
+		self.possible_moves_column = []
+		
+		# Check all points that can be moved to create a row of 3.
+
+		for entry in self.hor:
+			for column in [-1, 2]:
+				for row in [-1, 0, 1]:
+					color = entry[2]
+					test_coord = [entry[0] + row, entry[1] + column]
+					
+
+					if -1 < test_coord[0] < self.size[0] and -1 < test_coord[1] < self.size[1]: #Another sanity check.
+						print test_coord
+						if color == str(self.board[test_coord[0]][test_coord[1]]):
+							print "It matches!"
+							self.possible_moves_row.append([test_coord[0], test_coord[1], color])
+
+		# Check all points that can be moved to create a column of 3.
+
+		for entry in self.ver:
+			for row in [-1, 2]:
+				for column in [-1, 0, 1]:
+					color = entry[2]
+					test_coord = [entry[0] + row, entry[1] + column]
+					
+
+					if -1 < test_coord[0] < self.size[0] and -1 < test_coord[1] < self.size[1]: #Another sanity check.
+						print test_coord
+						if color == str(self.board[test_coord[0]][test_coord[1]]):
+							print "It matches!"
+							self.possible_moves_column.append([test_coord[0], test_coord[1], color])
+
+
+		if self.possible_moves_row == [] and self.possible_moves_column == []:
+			print "No possible moves. You're screwed."
+			return None
+
+
+
+		print self.possible_moves_row
+		print self.possible_moves_column
+		
+	def find_possible_matches(self):
+		# Sanity check.
+		if self.hor == [] and self.ver == []:
+			print "No adjacent pairs. No possible moves."
+			return None
+
+		self.possible_moves_row = []
+		self.possible_moves_column = []
+		
+		# Check all points that can be moved to create a row of 3.
+
+		for entry in self.hor:
+			for column in [-1, 2]:
+				for row in [-1, 0, 1]:
+					color = entry[2]
+					test_coord = [entry[0] + row, entry[1] + column]
+					
+
+					if -1 < test_coord[0] < self.size[0] and -1 < test_coord[1] < self.size[1]: #Another sanity check.
+						print test_coord
+						if color == str(self.board[test_coord[0]][test_coord[1]]):
+							print "It matches!"
+							self.possible_moves_row.append([test_coord[0], test_coord[1], color])
+
+		# Check all points that can be moved to create a column of 3.
+
+		for entry in self.ver:
+			for row in [-1, 2]:
+				for column in [-1, 0, 1]:
+					color = entry[2]
+					test_coord = [entry[0] + row, entry[1] + column]
+					
+
+					if -1 < test_coord[0] < self.size[0] and -1 < test_coord[1] < self.size[1]: #Another sanity check.
+						print test_coord
+						if color == str(self.board[test_coord[0]][test_coord[1]]):
+							print "It matches!"
+							self.possible_moves_column.append([test_coord[0], test_coord[1], color])
+
+
+		if self.possible_moves_row == [] and self.possible_moves_column == []:
+			print "No possible moves. You're screwed."
+			return None
+
+
+
+		print self.possible_moves_row
+		print self.possible_moves_column
+
 	def remove(self, i, j):
 		# don't call collapse! remove will be called >= 3 times before
 		# collapse is called.
