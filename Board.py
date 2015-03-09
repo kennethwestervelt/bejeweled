@@ -10,12 +10,12 @@ class Board(object):
         self.board = [[0] * size[1]] * size[0]
 
     def randomize(self):
+        """Generates a random board position."""
         self.board = [[random.randint(1, self.n_types) for i in
                        xrange(self.size[1])] for j in xrange(self.size[0])]
 
     def check_for_pairs(self):
-        # Returns pair-coordinates of adjacent colors and their direction
-        # (row/col).
+        """Finds coordinates of pairs that are valid moves."""
         self.hor = []
         self.ver = []
         # checks to the right
@@ -135,6 +135,7 @@ class Board(object):
         print self.possible_moves_column
 
     def remove(self, i, j):
+        """Removes the piece at (i,j) and moves the pieces above it down."""
         # don't call collapse! remove will be called >= 3 times before
         # collapse is called.
         if i >= self.size[0] or j >= self.size[1]:
@@ -145,6 +146,8 @@ class Board(object):
         self.board[0][j] = 0
 
     def is_in_run(self, i, j):
+        """Checks whether the piece at i,j forms a run of 3 or more of the same
+        color."""
         # Check to the left, right, up, and down, then use a list comp
         # to create a list of points to remove. This handles the
         # creation of multiple runs in one move.
@@ -196,6 +199,7 @@ class Board(object):
         return False
 
     def collapse(self):
+        """Removes all pieces in runs and collapses the board."""
         # Return false if no possible runs to collapse.
         run_points = [(i, j) for i in xrange(self.size[0]) for j in
                       xrange(self.size[1]) if self.is_in_run(i, j)]
@@ -206,6 +210,8 @@ class Board(object):
         return True
 
     def move(self, a, b):
+        """Checks that the coordinate pairs a,b are able to be swapped, and
+        swaps them."""
         if abs(a[0] - b[0]) + abs(a[1] - b[1]) != 1:
             raise ValueError("Invalid targets for move.")
         self.board[a[0]][a[1]], self.board[b[0]][b[1]] = \
@@ -214,6 +220,13 @@ class Board(object):
         # DISABLED FOR DEBUG
         # if self.collapse() is False:
         #   raise ValueError("Move does not create any runs.")
+
+    def fill(self):
+        """Adds random pieces to empty places on the board."""
+        for i in xrange(self.size[0]):
+            for j in xrange(self.size[1]):
+                if self.board[i][j] == 0:
+                    self.board[i][j] = random.randint(1, self.n_types)
 
 
 if __name__ == '__main__':
